@@ -48,9 +48,8 @@ nav a:hover {
 </style>
 
 <ul class="nav">
-	<li class="nav-item"><a class="nav-link"
-		href="/Airport/">Home</a></li>
-	
+	<li class="nav-item"><a class="nav-link" href="/Airport/">Home</a></li>
+
 	<li class="nav-item"><a class="nav-link"
 		href="/Airport/booking/getData">Book Flight</a></li>
 
@@ -69,9 +68,11 @@ nav a:hover {
 			href="/Airport/user/my-flights">My Flights</a></li>
 
 		<sec:authorize access="hasAnyRole('ADMIN','AVIOCOMPANY')">
-			<li class="nav-item"><a class="nav-link" href="/Airport/avio/details">Airline
-					details</a></li>
-			<li class="nav-item"><a class="nav-link" href="/Airport/avio/rent">Rent</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/Airport/avio/details">Airline details</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="/Airport/avio/rent">Rent</a></li>
 		</sec:authorize>
+		<li class="nav-item"><a class="nav-link" href ="/Airport/logout">Logout</a></li>
 	</sec:authorize>
 </ul>

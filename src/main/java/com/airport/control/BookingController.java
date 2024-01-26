@@ -44,16 +44,16 @@ public class BookingController {
 		System.out.println("depAirport: " + idDep + " arrAirport: " + idArr + " date: " + dat);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateS = null;
-        try {
-            dateS = dateFormat.parse(dat);
-            System.out.println("Parsed Date: " + dateS);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Calendar c = Calendar.getInstance();
-        c.setTime(dateS);
-        c.add(Calendar.DATE, 1);
-        Date dateE = c.getTime();
+		try {
+			dateS = dateFormat.parse(dat);
+			System.out.println("Parsed Date: " + dateS);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(dateS);
+		c.add(Calendar.DATE, 1);
+		Date dateE = c.getTime();
 		List<Let> letovi = bs.getFlights(dateS, dateE, idDep, idArr);
 		req.setAttribute("letovi", letovi);
 		return "booking";
@@ -67,40 +67,33 @@ public class BookingController {
 	}
 
 	@PostMapping("/confirmSelection")
-	public String confirmSelection(@RequestBody SeatSelectionRequest seatSelectionBody, HttpServletRequest req) {
+	public String confirmSelection(@RequestBody SeatSelectionRequest seatSelectionBody, HttpServletRequest req,
+			Principal p) {
 		List<SedisteJson> sedistaRaw = seatSelectionBody.getSelectedSeats();
 		List<Sediste> sedista = new LinkedList<>();
-		for(SedisteJson sj : sedistaRaw) {
+		for (SedisteJson sj : sedistaRaw) {
 			String[] seats = sj.getSeat().split(" ");
-			for(int i = 0; i<seats.length; i++) {
+			for (int i = 0; i < seats.length; i++) {
 				String[] rowColumn = seats[i].split("-");
-				sedista.add(bs.findById(Integer.parseInt(rowColumn[0]),Integer.parseInt(rowColumn[1])));
+				sedista.add(bs.findById(Integer.parseInt(rowColumn[0]), Integer.parseInt(rowColumn[1])));
 			}
 		}
 		req.getSession().setAttribute("fNumber", seatSelectionBody.getFlightNumber());
 		req.setAttribute("numberSeats", sedista.size());
+		req.setAttribute("pass", p.getName());
 		req.getSession().setAttribute("sedista", sedista);
 		return "confirmSelection";
 	}
-	
-	@PostMapping("/addPassenger")
-	public String addPass(@RequestParam("passengerNames") List<String> passengerNames, HttpServletRequest req) {
-		req.setAttribute("passengers", passengerNames);
-		return "confirmSelection";
-	}
-	
-	// TODO: Add support for multiple seats and fix sedista.
-	// TODO: Get user from session and pass it trough.
+
 	@PostMapping("/confirmReservation")
-	public String confirmReservation(@RequestParam("fNumber") String fNumber,
-			/* @RequestParam("seats") List<Sediste> sedista, */ HttpServletRequest req, Principal p) {
+	public String confirmReservation(@RequestParam("fNumber") String fNumber, HttpServletRequest req, Principal p) {
 		@SuppressWarnings("unchecked")
 		List<Sediste> sed = (List<Sediste>) (req.getSession().getAttribute("sedista"));
 		List<Karta> kar = new LinkedList<>();
-		for(Sediste s: sed) {
+		for (Sediste s : sed) {
 			kar.add(bs.makeReservation(fNumber, s, p.getName()));
 		}
-		
+
 		req.setAttribute("karte", kar);
 		req.getSession().removeAttribute("fNumber");
 		req.getSession().removeAttribute("sedista");

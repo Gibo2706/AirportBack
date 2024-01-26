@@ -103,7 +103,7 @@ footer {
     document.addEventListener("DOMContentLoaded", function() {
         var seats = document.querySelectorAll('.seat');
         var confirmButton = document.getElementById('confirmButton');
-        var flightNumber = "${fNumber}"; // Use JSTL to include the flight number
+        var flightNumber = "${fNumber}"; 
 
         seats.forEach(function(seat) {
             seat.addEventListener('click', function() {

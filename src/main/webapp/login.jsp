@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login</title>
-<link rel="stylesheet" type="text/css" href="/Airport/css/login.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
@@ -43,16 +42,10 @@
 		</div>
 	</div>
 
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
-		integrity="sha384-XehGiCTtjhGC+2rL9JS7nptPyGnvD3p5s5qz7L7gCxpbmyQpZTQ9zmeQFHEBM2Hx"
-		crossorigin="anonymous"></script>
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-		integrity="sha384-b4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyEqFSQr9tcx4PNIgMXkkoqXv4s5eS9qDj"
-		crossorigin="anonymous"></script>
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>

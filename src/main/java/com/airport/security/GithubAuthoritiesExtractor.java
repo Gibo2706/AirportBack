@@ -10,7 +10,6 @@ public class GithubAuthoritiesExtractor implements AuthoritiesExtractor {
 
 	@Override
 	public List<GrantedAuthority> extractAuthorities(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

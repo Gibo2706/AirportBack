@@ -11,5 +11,8 @@ import model.Korisnik;
 public interface KartaRepo extends JpaRepository<Karta, Integer> {
 
 	@Query("Select k from Karta k where k.korisnikBean = :k")
-	public List<Karta> findAllByKorisnik(Korisnik k);
+	List<Karta> findAllByKorisnik(Korisnik k);
+	
+	@Query("Select k from Karta k where k.let.aviokompanija.id = :id")
+	List<Karta> findAllByAirline(int id);
 }

@@ -34,21 +34,28 @@ public class SecurityConfig {
 	 * 
 	 * return new InMemoryUserDetailsManager(user, admin); }
 	 */
-	
+
 	@Autowired
 	AuthServiceOauth authServiceOauth;
-	
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(req -> req.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
 				.requestMatchers(new AntPathRequestMatcher("/user/**")).hasAnyRole("ADMIN", "USER", "AVIOCOMPANY")
 				.requestMatchers(new AntPathRequestMatcher("/booking/**")).hasAnyRole("ADMIN", "USER", "AVIOCOMPANY")
+				.requestMatchers(new AntPathRequestMatcher("/avio/**")).hasAnyRole("ADMIN", "AVIOCOMPANY")
+				.requestMatchers(new AntPathRequestMatcher("/api/login")).permitAll()
+				.requestMatchers(new AntPathRequestMatcher("/api/register")).permitAll()
+				.requestMatchers(new AntPathRequestMatcher("/api/**")).hasAnyRole("ADMIN", "USER", "AVIOCOMPANY")
 				.requestMatchers(new AntPathRequestMatcher("/**")).permitAll().anyRequest().authenticated())
-				.formLogin(form -> form.loginPage("/login.jsp").permitAll().loginProcessingUrl("/login")
+				.formLogin(form -> form.loginPage("/login.jsp")
+						.permitAll()
+						.loginProcessingUrl("/login")
 						.defaultSuccessUrl("/"))
 				.logout(l -> l.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll())
-				.csrf(csfr -> csfr.disable()).oauth2Login(oauth2Login -> oauth2Login.loginPage("/login.jsp").userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(authServiceOauth)));
+				.csrf(csfr -> csfr.disable())
+				.oauth2Login(oauth2Login -> oauth2Login.loginPage("/login.jsp")
+						.userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(authServiceOauth)));
 		return http.build();
 	}
 
@@ -67,10 +74,9 @@ public class SecurityConfig {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
-	
 	@Bean
-    PrincipalExtractor gitHubPrincipalExtractor() {
-        return new GithubPrincipalExtractor();
-    }
+	PrincipalExtractor gitHubPrincipalExtractor() {
+		return new GithubPrincipalExtractor();
+	}
 
 }

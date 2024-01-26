@@ -23,7 +23,7 @@ footer {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	background-color: #1a1a1a;
+	background-color: #007bff;
 	color: #fff;
 	text-align: center;
 	padding: 20px 0;
@@ -60,13 +60,11 @@ footer {
 	</section>
 
 
-	<footer class="bg-info text-white text-center py-2">
+	<footer class="text-center py-2">
 		<p>&copy; 2023 Flight Booking</p>
 	</footer>
 
 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofEEx4Xl0MeS4SgA6owVIfYItQF2gR8Q2n"
-		crossorigin="anonymous"></script>
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

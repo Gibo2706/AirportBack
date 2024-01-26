@@ -38,7 +38,7 @@ public class AuthUser implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return user.getUsername();
+		return name;
 	}
 
 	@Override
@@ -53,7 +53,6 @@ public class AuthUser implements UserDetails {
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -67,7 +66,7 @@ public class AuthUser implements UserDetails {
 	}
 
 	public String getName() {
-		return name;
+		return user.getUsername();
 	}
 
 	public void setName(String name) {

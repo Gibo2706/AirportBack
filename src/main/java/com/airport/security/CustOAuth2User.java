@@ -30,13 +30,11 @@ public class CustOAuth2User implements OAuth2User {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return ud.getAuthorities();
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return user.getUsername();
 	}
 

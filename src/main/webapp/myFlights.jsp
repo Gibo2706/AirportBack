@@ -13,8 +13,8 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-
-<link rel="stylesheet" type="text/css" href="/Airport/css/myFlights.css">
+<!-- 
+<link rel="stylesheet" type="text/css" href="/Airport/css/myFlights.css"> -->
 <style>
 header {
 	background-color: #007bff;
@@ -67,10 +67,11 @@ footer {
 			<c:forEach items="${letovi}" var="flight">
 				<li class="flight-item">
 					<h3>${flight.let.getFNumber()}</h3>
-					<h1>${flight.let.aerodrom1.getNaziv() } -->
-						${flight.let.aerodrom2.getNaziv() }</h1>
+					<h1>${flight.let.aerodrom1.getNaziv()} -->
+						${flight.let.aerodrom2.getNaziv()}</h1>
 					<h2>Seats: ${flight.sediste.id.row} -
 						${flight.sediste.id.column}</h2>
+					<h4>Date and Time of departure: ${flight.let.getDatumString() }</h4>
 				</li>
 			</c:forEach>
 		</ul>
@@ -81,9 +82,7 @@ footer {
 	</footer>
 
 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofEEx4Xl0MeS4SgA6owVIfYItQF2gR8Q2n"
-		crossorigin="anonymous"></script>
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

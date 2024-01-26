@@ -1,0 +1,68 @@
+/* Styles for Airline Details Page */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f0f8ff;
+}
+
+.container {
+	max-width: 800px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #fff; /* White background */
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+
+h1, h2 {
+	color: #333;
+}
+
+.info-item {
+	margin-bottom: 10px;
+}
+
+.info-item strong {
+	margin-right: 10px;
+	font-weight: bold;
+}
+
+ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+ul li {
+	margin-bottom: 5px;
+}
+
+nav {
+	background-color: #1a1a1a; /* Dark Gray */
+	color: #fff;
+	padding: 10px 0;
+	display: flex;
+	justify-content: space-around;
+}
+
+nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+}
+
+nav ul li {
+	margin: 0 20px;
+}
+
+nav a {
+	text-decoration: none;
+	color: #fff;
+	font-weight: 500;
+	transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+	color: #ffcc29;
+}

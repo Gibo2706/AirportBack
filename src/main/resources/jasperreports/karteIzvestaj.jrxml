@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="karteIzvestaj" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8da1426b-41c1-4710-a1be-01d0423e98f5">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="avio" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="korisnikBean.username" class="java.lang.String"/>
+	<field name="let.fNumber" class="java.lang.String"/>
+	<field name="let.datum" class="java.util.Date"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="61df2bce-4e18-4e99-b705-9a8cd4a599a2"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="d2c2619b-9508-4542-b2d1-feb4808a4779"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Izvestaj]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="f62ac4a9-f8d0-49ed-96ab-444ec204513f"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Detaljan izvestaj o kartama]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="360" y="63" width="100" height="20" forecolor="#FFFFFF" uuid="0245dd32-d621-434a-a1c9-68d899116bb1"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Za kompaniju:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="460" y="63" width="114" height="20" forecolor="#FFFFFF" uuid="96cf356c-9fe1-4489-816e-3006186fa6f7">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+						<font size="13"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{avio}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+			<staticText>
+				<reportElement x="0" y="0" width="185" height="21" uuid="dc018df1-d848-4105-a39e-0d9bfc5d4685">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="df9c0631-a150-47a9-931a-ce9067562636"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[User]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="0" width="185" height="21" uuid="5ab8e68c-a134-4bd7-a458-85bcf8ea25e6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b3b6be23-2d71-4fc6-928b-bc6614093c95"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Flight Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="185" height="21" uuid="0810f5d8-e738-4dff-82b4-035960d4ff5b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8007e65a-fe81-45b5-a696-1cb943f7696a"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Date of flight]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+			<textField>
+				<reportElement x="0" y="0" width="185" height="30" uuid="5324253e-7c3e-4355-9954-16e5e63356fd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="df9c0631-a150-47a9-931a-ce9067562636"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{korisnikBean.username}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="0" width="185" height="30" uuid="34ae5a03-1d88-406e-b7c3-4028031a9445">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b3b6be23-2d71-4fc6-928b-bc6614093c95"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{let.fNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="185" height="30" uuid="65900f15-ee0f-4c96-bb2b-7d2ba7352c9a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8007e65a-fe81-45b5-a696-1cb943f7696a"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.25"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{let.datum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="6b8a9f4c-443a-4673-81d8-453f2274f0da"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="f2083102-cb43-4d48-a228-0dab245ec296"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="9bd88179-40e0-4154-96ab-650ac535edb4"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
