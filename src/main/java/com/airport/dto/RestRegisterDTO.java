@@ -1,6 +1,6 @@
-package com.airport.rest;
+package com.airport.dto;
 
-public class RestRegister {
+public class RestRegisterDTO {
 	private String username;
 	private String password;
 	private String firstname;

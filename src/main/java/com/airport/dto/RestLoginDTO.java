@@ -1,13 +1,13 @@
-package com.airport.rest;
+package com.airport.dto;
 
-public class RestLogin {
+public class RestLoginDTO {
 	private String username;
 	private String password;
 	
-	public RestLogin() {
+	public RestLoginDTO() {
 	}
 
-	public RestLogin(String username, String password) {
+	public RestLoginDTO(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}

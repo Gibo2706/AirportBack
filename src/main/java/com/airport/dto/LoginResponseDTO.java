@@ -1,14 +1,14 @@
-package com.airport.rest;
+package com.airport.dto;
 
 
-public class LoginResponse {
+public class LoginResponseDTO {
 	String token;
 	Object user;
 
-	public LoginResponse() {
+	public LoginResponseDTO() {
 	}
 
-	public LoginResponse(String token, Object user ) {
+	public LoginResponseDTO(String token, Object user ) {
 		this.token = token;
 		this.user = user;
 	}

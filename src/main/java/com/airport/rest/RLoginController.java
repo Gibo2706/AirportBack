@@ -1,6 +1,7 @@
 package com.airport.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.airport.dto.LoginResponseDTO;
+import com.airport.dto.RestLoginDTO;
+import com.airport.dto.RestRegisterDTO;
 import com.airport.service.UserService;
 
 import model.Korisnik;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/")
 public class RLoginController {
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -25,20 +29,21 @@ public class RLoginController {
 	UserService us;
 
 	@PostMapping("/login")
-	public LoginResponse login(@RequestBody RestLogin restLogin) {
+	public ResponseEntity<LoginResponseDTO> login(@RequestBody RestLoginDTO restLogin) {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(restLogin.getUsername(), restLogin.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
+		if (authentication==null)
+			return ResponseEntity.badRequest().body(new LoginResponseDTO("FAIL", null));
 		if (authentication.isAuthenticated())
-			return new LoginResponse("OK",authentication.getPrincipal());
+			return ResponseEntity.ok().body(new LoginResponseDTO("OK",authentication.getPrincipal()));
 		else
-			return new LoginResponse("FAIL", null);
+			return ResponseEntity.badRequest().body(new LoginResponseDTO("FAIL", null));
 	}
 
 	@PostMapping("/register")
-	public String register(@RequestBody RestRegister restRegister) {
+	public String register(@RequestBody RestRegisterDTO restRegister) {
 		Korisnik k = new Korisnik();
 		k.setEmail(restRegister.getEmail());
 		k.setName(restRegister.getFirstname());
@@ -65,6 +70,7 @@ public class RLoginController {
 	
 	@GetMapping("/test")
 	public String test() {
-		return "OK";
+		System.out.println("Test");
+		return "ok";
 	}
 }
