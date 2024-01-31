@@ -52,6 +52,9 @@ footer {
 	</nav>
 	<div class="container">
 		<h1>Airline Details</h1>
+		<c:if test="${not empty msg}">
+			<p>${msg }
+		</c:if>
 		<hr>
 		<div class="airline-info">
 			<h2>Airline Information</h2>
@@ -62,7 +65,7 @@ footer {
 				<strong>Name:</strong> <span>${airline.naziv}</span>
 			</div>
 		</div>
-
+		<hr>
 		<div class="airplane-list">
 			<h2>Airplanes</h2>
 			<hr>
@@ -71,6 +74,14 @@ footer {
 					<li>${airplane.tailNumber}-${airplane.tipaviona.naziv}<c:if
 							test="${airplane.aviokompanija2!=null}"> - <i>RENTED
 								TO</i>: { <strong>${airplane.aviokompanija2.naziv}</strong> }</c:if></li>
+				</c:forEach>
+			</ul>
+			<ul>
+				<h4>Rented planes</h4>
+				<c:forEach var="airplane" items="${rentedAirplaneList}">
+					<li>${airplane.tailNumber}-${airplane.tipaviona.naziv}- <i>RENTED
+							FROM</i>: { <strong>${airplane.aviokompanija1.naziv}</strong> }
+					</li>
 				</c:forEach>
 			</ul>
 		</div>
@@ -99,8 +110,21 @@ footer {
 			</ul>
 		</div>
 
-		<hr>
-		<!-- Button to generate JasperReport -->
+		<div class="options">
+			<h2>Options</h2>
+			<hr>
+			<button type="button" class="btn btn-primary"
+				onclick="window.location.href='add-plane'">Add Plane</button>
+			<button type="button" class="btn btn-primary"
+				onclick="window.location.href='add-pilot'">Add Pilot</button>
+			<button type="button" class="btn btn-primary"
+				onclick="window.location.href='add-flight'">Add Flight</button>
+			<button type="button" class="btn btn-primary"
+				onclick="window.location.href='add-seats'">Add Seats</button>
+			<hr>
+			
+		</div>
+
 		<div class="text-center mt-4">
 			<form action="/Airport/avio/generateReport" method="post">
 				<input type="hidden" name="airlineId" value="${airline.id}">

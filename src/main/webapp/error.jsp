@@ -3,37 +3,45 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcome to Flight Booking</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="css/landing.css">
+<title>Error</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 <style>
-body {
-	margin-bottom: 56px;
+header {
+	background-color: #007bff;
+	color: #fff;
+	padding: 15px 0;
+}
+
+section {
+	margin-top: 30px;
+}
+
+.error-info {
+	background-color: #f8d7da;
+	padding: 20px;
+	border-radius: 8px;
+	color: #721c24;
 }
 
 footer {
+	background-color: #007bff;
+	color: #fff;
+	padding: 10px 0;
 	position: fixed;
 	bottom: 0;
 	width: 100%;
-	background-color: #007bff;
-	color: #fff;
-	text-align: center;
-	padding: 20px 0;
 }
 </style>
 </head>
-<body>
+<body style="margin: auto;">
 
-	<header class="bg-primary text-white text-center py-3">
-		<h1>Welcome to Flight Booking</h1>
+	<header class="text-center py-3">
+		<h1>Error</h1>
 	</header>
 
 	<nav class="bg-info text-white py-2">
@@ -43,14 +51,13 @@ footer {
 		</div>
 	</nav>
 
-	<section class="container mt-4">
-		<h2>About Us</h2>
-		<p>We strive to provide you with the best flight booking
-			experience possible. Whether you're traveling for business or
-			leisure, our platform offers a seamless booking process and a wide
-			range of options to suit your needs.
-	</section>
-
+	<div class="container mt-4">
+		<h2>Error Details</h2>
+		<hr>
+		<div class="error-info">
+			<p>${errorMess}</p>
+		</div>
+	</div>
 
 	<footer class="text-center py-2">
 		<p>&copy; 2023 Flight Booking</p>

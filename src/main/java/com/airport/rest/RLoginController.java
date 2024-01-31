@@ -29,7 +29,7 @@ public class RLoginController {
 	UserService us;
 
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponseDTO> login(@RequestBody RestLoginDTO restLogin) {
+	public ResponseEntity<LoginResponseDTO> login(@RequestBody RestLoginDTO restLogin) throws NoSuchFieldException, SecurityException {
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(restLogin.getUsername(), restLogin.getPassword()));
 

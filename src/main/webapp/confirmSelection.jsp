@@ -27,7 +27,7 @@
 			<p>
 				Selected Seats:
 				<c:forEach items="${sedista}" var="s">
-						${s.id.row}-${s.id.column}
+						${s.id.redovi}-${s.id.kolone}
 					</c:forEach>
 			</p>
 

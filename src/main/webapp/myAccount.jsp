@@ -36,11 +36,12 @@ footer {
 	background-color: #007bff;
 	color: #fff;
 	padding: 10px 0;
-	position: fixed;
+	position: relative;
 	bottom: 0;
 	width: 100%;
 }
 </style>
+<sec:authentication var="pic" property="principal.user.profPicture" />
 </head>
 <body style="margin: auto;">
 
@@ -58,19 +59,92 @@ footer {
 		<div class="account-info">
 			<h2>
 				Welcome,
-				<sec:authentication property="principal.user.name" />
+				<sec:authentication var="principal" property="principal" />
+				<c:choose>
+					<c:when
+						test="${not empty principal and not empty principal.user and not empty principal.user.profPicture}">
+						<sec:authentication property="principal.user.name" />
+						
+						<img alt="<sec:authentication property="principal.user.name" />"
+							src="data:image/*;base64, ${encoder.encode(pic)}"
+							style="width: 150px; height: 150px; border: 2px solid #000; text-align: center;">
+					</c:when>
+					<c:otherwise>
+						<sec:authentication property="principal.user.name" />
+						<!-- Add a default image if profPicture is null -->
+						<img alt="<sec:authentication property="principal.user.name" />"
+							src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+							style="width: 150px; height: 150px; border: 2px solid #000; text-align: center;">
+					</c:otherwise>
+				</c:choose>
 			</h2>
+			<form action="/Airport/user/change-profile-picture" method="get"
+					style="text-align: center;">
+					<button type="submit" class="btn btn-primary">Change
+						Picture</button>
+				</form>
 			<p>Your account details:</p>
 			<ul>
 				<li><strong>Email:</strong> <sec:authentication
 						property="principal.user.email" /></li>
 				<li><strong>Username:</strong> <sec:authentication
 						property="principal.user.username" /></li>
-				<%-- <li><strong>Name:</strong> <sec:authentication
-						property="principal.name" /></li> --%>
+				<li><strong>Phone:</strong> <sec:authentication
+						property="principal.user.phone" /></li>
+				<li><strong>Country:</strong> <sec:authentication
+						property="principal.user.drzavaBean.name" /></li>
 			</ul>
 		</div>
 	</section>
+	<section class="container mt-4">
+		<div class="account-info">
+			<p>Change your details:</p>
+			<c:if test="${not empty msg}">
+				<p>${msg }
+			</c:if>
+			<div class="row">
+				<div class="col-md-6 mb-3">
+					<a href="/Airport/user/change-email">
+						<button type="button" class="btn btn-primary btn-block">Change
+							Email</button>
+					</a>
+				</div>
+				<div class="col-md-6 mb-3">
+					<a href="/Airport/user/change-username">
+						<button type="button" class="btn btn-primary btn-block">Change
+							Username</button>
+					</a>
+				</div>
+				<div class="col-md-6 mb-3">
+					<a href="/Airport/user/change-password">
+						<button type="button" class="btn btn-primary btn-block">Change
+							Password</button>
+					</a>
+				</div>
+				<div class="col-md-6 mb-3">
+					<a href="/Airport/user/change-phone">
+						<button type="button" class="btn btn-primary btn-block">Change
+							Phone</button>
+					</a>
+				</div>
+				<div class="col-md-6 mb-3">
+					<a href="/Airport/user/change-name">
+						<button type="button" class="btn btn-primary btn-block">Change
+							First Name</button>
+					</a>
+				</div>
+				<div class="col-md-6 mb-3">
+					<a href="/Airport/user/change-surname">
+						<button type="button" class="btn btn-primary btn-block">Change
+							Last Name</button>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
 
 	<footer class="text-center py-2">
 		<p>&copy; 2023 Flight Booking</p>

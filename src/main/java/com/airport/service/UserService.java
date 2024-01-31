@@ -1,10 +1,12 @@
 package com.airport.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.airport.repo.DrzavaRepo;
 import com.airport.repo.KartaRepo;
@@ -65,5 +67,75 @@ public class UserService {
 	
 	public void delete(Korisnik k) {
 		kor.delete(k);
+	}
+	
+	public void changePassword(Korisnik k, String password) {
+		k.setPassword(bCryptPasswordEncoder.encode(password));
+		System.out.println(k.getPassword());
+		kor.save(k);
+	}
+	
+	public void changeEmail(Korisnik k, String email) {
+		k.setEmail(email);
+		kor.save(k);
+	}
+	
+	public void changeUsername(Korisnik k, String username) {
+		k.setUsername(username);
+		kor.save(k);
+	}
+	
+	public void changePhone(Korisnik k, String phone) {
+		k.setPhone(phone);
+		kor.save(k);
+	}
+
+	public boolean checkUsername(String username) {
+		if (kor.findByUsername(username).isPresent())
+			return false;
+		return true;
+	}
+
+	public boolean checkPassword(String password) {
+		if (password.length() >= 8)
+			return true;
+		return false;
+	}
+
+	public boolean checkRole(String role) {
+		if (role.equals("USER") || role.equals("ADMIN") || role.equals("AVIOCOMPANY"))
+			return true;
+		return false;
+	}
+	
+	public int addUser(String username, String password, String email, String role) {
+		Korisnik k = new Korisnik();
+		k.setUsername(username);
+		k.setPassword(bCryptPasswordEncoder.encode(password));
+		k.setRole(rr.findByName(role));
+		k.setDrzavaBean(dr.findByCode("SRB"));
+		k.setPhone("0000000000");
+		k.setEmail(email);
+		k.setName("changeName");
+		k.setSurname("changeSurname");
+		
+		k = kor.save(k);
+		return k.getId();
+	}
+
+	public void changeName(Korisnik byUsername, String name) {
+		byUsername.setName(name);
+        kor.save(byUsername);		
+	}
+
+	public void changeSurname(Korisnik byUsername, String surname) {
+		byUsername.setSurname(surname);
+		kor.save(byUsername);
+		
+	}
+
+	public void changeProfilePicture(Korisnik byUsername, MultipartFile profilePicture) throws IOException {
+		byUsername.setProfPicture(profilePicture.getBytes());
+		kor.saveAndFlush(byUsername);
 	}
 }

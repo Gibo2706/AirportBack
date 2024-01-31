@@ -58,6 +58,9 @@ footer {
 	</nav>
 	<div class="container mt-4">
 		<h1>Rent Airplanes</h1>
+		<c:if test="${not empty msg}">
+			<p>${msg }
+		</c:if>
 		<div class="rental-form">
 			<form action="/Airport/avio/rentPlane" method="post">
 				<div class="mb-3">

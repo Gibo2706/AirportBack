@@ -54,7 +54,7 @@ nav a:hover {
 		href="/Airport/booking/getData">Book Flight</a></li>
 
 	<sec:authorize access="!isAuthenticated()">
-		<li class="nav-item"><a class="nav-link" href="/Airport/log">Login</a></li>
+		<li class="nav-item"><a class="nav-link" href="/Airport/login">Login</a></li>
 		<li class="nav-item"><a class="nav-link" href="/Airport/register">Register</a></li>
 	</sec:authorize>
 
@@ -64,15 +64,20 @@ nav a:hover {
 					property="principal.user.name" /> <sec:authentication
 					property="principal.user.surname" />
 		</a></li>
+		<sec:authorize access="hasAnyRole('ADMIN','USER')">
 		<li class="nav-item"><a class="nav-link"
 			href="/Airport/user/my-flights">My Flights</a></li>
-
+		</sec:authorize>
 		<sec:authorize access="hasAnyRole('ADMIN','AVIOCOMPANY')">
 			<li class="nav-item"><a class="nav-link"
 				href="/Airport/avio/details">Airline details</a></li>
 			<li class="nav-item"><a class="nav-link"
 				href="/Airport/avio/rent">Rent</a></li>
 		</sec:authorize>
-		<li class="nav-item"><a class="nav-link" href ="/Airport/logout">Logout</a></li>
+		<sec:authorize access="hasRole('ADMIN')">
+			<li class="nav-item"><a class="nav-link"
+				href="/Airport/admin/">Admin panel</a></li>
+		</sec:authorize>
+		<li class="nav-item"><a class="nav-link" href="/Airport/logout">Logout</a></li>
 	</sec:authorize>
 </ul>

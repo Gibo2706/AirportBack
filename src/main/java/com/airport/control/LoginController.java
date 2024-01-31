@@ -7,20 +7,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.airport.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import model.Korisnik;
 
 @Controller
+@RequestMapping("/")
 public class LoginController {
 	
 	@Autowired
 	UserService us;
 
-	@GetMapping("/log")
+	@GetMapping("/login")
 	public String showLoginForm(Model model) {
 		return "login";
 	}
@@ -74,6 +77,12 @@ public class LoginController {
 	    k.setDrzavaBean(us.findByCode(code));
 	    us.save(k);
 		return "index";
+	}
+	
+	@GetMapping("/error")
+	public String showErrorPage(HttpServletRequest req, HttpSession ses) {
+		req.setAttribute("errorMess", ses.getAttribute("errorMess"));
+		return "error";
 	}
 
 }

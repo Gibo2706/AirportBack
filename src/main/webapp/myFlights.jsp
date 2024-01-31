@@ -69,8 +69,8 @@ footer {
 					<h3>${flight.let.getFNumber()}</h3>
 					<h1>${flight.let.aerodrom1.getNaziv()} -->
 						${flight.let.aerodrom2.getNaziv()}</h1>
-					<h2>Seats: ${flight.sediste.id.row} -
-						${flight.sediste.id.column}</h2>
+					<h2>Seats: ${flight.sediste.id.redovi} -
+						${flight.sediste.id.kolone}</h2>
 					<h4>Date and Time of departure: ${flight.let.getDatumString() }</h4>
 				</li>
 			</c:forEach>

@@ -31,8 +31,8 @@ section {
 }
 
 .seat {
-	width: 30px;
-	height: 30px;
+	width: 50px;
+	height: 50px;
 	margin: 5px;
 	background-color: #6c757d; /* Gray color for available seats */
 	border: 1px solid #495057;
@@ -77,11 +77,11 @@ footer {
 			<c:if test="${!empty sedista}">
 				<c:forEach items="${sedista}" var="s" varStatus="status">
 					<c:if test="${status.index - 1 > 0}">
-						<c:if test="${sedista.get(status.index - 1).id.row != s.id.row}">
+						<c:if test="${sedista.get(status.index - 1).id.redovi != s.id.redovi}">
 							<div class="break"></div>
 						</c:if>
 					</c:if>
-					<span class="seat">${s.id.row}-${s.id.column}</span>
+					<span class="seat">${s.id.redovi}-${s.id.kolone}</span>
 				</c:forEach>
 			</c:if>
 		</div>
