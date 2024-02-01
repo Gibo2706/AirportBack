@@ -3,11 +3,11 @@ package com.airport.dto;
 public class RestRegisterDTO {
 	private String username;
 	private String password;
-	private String firstname;
-	private String lastname;
 	private String email;
 	private String phone;
 	private String country;
+	private String firstName;
+	private String lastName;
 	
 	
 	public String getUsername() {
@@ -23,16 +23,16 @@ public class RestRegisterDTO {
 		this.password = password;
 	}
 	public String getFirstname() {
-		return firstname;
+		return firstName;
 	}
 	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+		this.firstName = firstname;
 	}
 	public String getLastname() {
-		return lastname;
+		return lastName;
 	}
 	public void setLastname(String lastname) {
-		this.lastname = lastname;
+		this.lastName = lastname;
 	}
 	public String getEmail() {
 		return email;
@@ -51,5 +51,23 @@ public class RestRegisterDTO {
 	}
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	
+	@Override
+	public String toString() {
+		return "Username: " + username + ", Password: " + password + ", Email: " + email + ", Phone: " + phone
+				+ ", Country: " + country + ", Firstname: " + firstName + ", Lastname: " + lastName;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }

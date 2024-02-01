@@ -41,12 +41,10 @@ public class BookingController {
 	@PostMapping("/showFlights")
 	public String getFlights(@RequestParam("departureAirport") int idDep, @RequestParam("arrivalAirport") int idArr,
 			@RequestParam("departureDate") String dat, HttpServletRequest req) throws ParseException {
-		System.out.println("depAirport: " + idDep + " arrAirport: " + idArr + " date: " + dat);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateS = null;
 		try {
 			dateS = dateFormat.parse(dat);
-			System.out.println("Parsed Date: " + dateS);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

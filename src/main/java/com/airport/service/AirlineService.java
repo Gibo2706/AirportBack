@@ -1,5 +1,6 @@
 package com.airport.service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
@@ -87,7 +88,7 @@ public class AirlineService {
 		return br.findByAvioKompanija(id);
 	}
 
-	public byte[] getAirlineReport(int id) throws JRException {
+	public byte[] getAirlineReport(int id) throws JRException, IOException {
 		Aviokompanija a = avior.findById(id).orElse(null);
 		if (a == null) {
 			throw new RuntimeException("Airline not found!");
@@ -109,6 +110,7 @@ public class AirlineService {
 		params.put("avio", a.getNaziv());
 
 		JasperPrint jp = JasperFillManager.fillReport(jr, params, new JRBeanCollectionDataSource(karte));
+		in.close();
 		report = JasperExportManager.exportReportToPdf(jp);
 		return report;
 	}

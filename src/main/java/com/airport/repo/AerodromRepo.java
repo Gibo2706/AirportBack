@@ -6,4 +6,6 @@ import model.Aerodrom;
 
 public interface AerodromRepo extends JpaRepository<Aerodrom, Integer> {
 
+	Aerodrom findByNaziv(String naziv);
+
 }

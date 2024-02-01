@@ -29,7 +29,7 @@ public class UserController {
 	@GetMapping("/my-account")
 	public String myAccount(HttpServletRequest req, Principal p) {
 		req.setAttribute("korisnik", us.findByUsername(p.getName()));
-		req.setAttribute("encoder", ie);
+		req.getSession().setAttribute("encoder", ie);
 		return "myAccount";
 	}
 
@@ -86,6 +86,7 @@ public class UserController {
 		if (password.equals(password2)) {
 			us.changePassword(us.findByUsername(p.getName()), password);
 			req.setAttribute("msg", "Password successfully changed!");
+			myAccount(req, p);
 			return "myAccount";
 		} else {
 			req.setAttribute("msg", "Passwords don't match!");
@@ -99,6 +100,7 @@ public class UserController {
 		if (email.equals(email2)) {
 			us.changeEmail(us.findByUsername(p.getName()), email);
 			req.setAttribute("msg", "Email successfully changed!");
+			myAccount(req, p);
 			return "myAccount";
 		} else {
 			req.setAttribute("msg", "Emails don't match!");
@@ -112,6 +114,7 @@ public class UserController {
 		if (username.equals(username2)) {
 			us.changeUsername(us.findByUsername(p.getName()), username);
 			req.setAttribute("msg", "Username successfully changed!");
+			myAccount(req, p);
 			return "myAccount";
 		} else {
 			req.setAttribute("msg", "Usernames don't match!");
@@ -125,6 +128,7 @@ public class UserController {
 		if (phone.equals(phone2)) {
 			us.changePhone(us.findByUsername(p.getName()), phone);
 			req.setAttribute("msg", "Phone number successfully changed!");
+			myAccount(req, p);
 			return "myAccount";
 		} else {
 			req.setAttribute("msg", "Phone numbers don't match!");
@@ -138,6 +142,7 @@ public class UserController {
 		if (name.equals(name2)) {
 			us.changeName(us.findByUsername(p.getName()), name);
 			req.setAttribute("msg", "Name successfully changed!");
+			myAccount(req, p);
 			return "myAccount";
 		} else {
 			req.setAttribute("msg", "Names don't match!");
@@ -151,6 +156,7 @@ public class UserController {
 		if (surname.equals(surname2)) {
 			us.changeSurname(us.findByUsername(p.getName()), surname);
 			req.setAttribute("msg", "Surname successfully changed!");
+			myAccount(req, p);
 			return "myAccount";
 		} else {
 			req.setAttribute("msg", "Surnames don't match!");
@@ -177,6 +183,7 @@ public class UserController {
 		}
 		us.changeProfilePicture(us.findByUsername(p.getName()), profilePicture);
 		req.setAttribute("msg", "Profile picture successfully changed!");
+		myAccount(req, p);
 		return "myAccount";
 	}
 

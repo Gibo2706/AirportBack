@@ -42,6 +42,10 @@ footer {
 }
 </style>
 <sec:authentication var="pic" property="principal.user.profPicture" />
+<sec:authentication var="user" property="principal.user" />
+<c:if test="${not empty korisnik}">
+	<c:set var="user" value="${korisnik}"/>
+</c:if>
 </head>
 <body style="margin: auto;">
 
@@ -63,16 +67,16 @@ footer {
 				<c:choose>
 					<c:when
 						test="${not empty principal and not empty principal.user and not empty principal.user.profPicture}">
-						<sec:authentication property="principal.user.name" />
+						${user.name }
 						
-						<img alt="<sec:authentication property="principal.user.name" />"
-							src="data:image/*;base64, ${encoder.encode(pic)}"
+						<img alt="${user.name}"
+							src="data:image/*;base64, ${encoder.encode(user.profPicture)}"
 							style="width: 150px; height: 150px; border: 2px solid #000; text-align: center;">
 					</c:when>
 					<c:otherwise>
 						<sec:authentication property="principal.user.name" />
 						<!-- Add a default image if profPicture is null -->
-						<img alt="<sec:authentication property="principal.user.name" />"
+						<img alt="${user.name}"
 							src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
 							style="width: 150px; height: 150px; border: 2px solid #000; text-align: center;">
 					</c:otherwise>
@@ -85,14 +89,10 @@ footer {
 				</form>
 			<p>Your account details:</p>
 			<ul>
-				<li><strong>Email:</strong> <sec:authentication
-						property="principal.user.email" /></li>
-				<li><strong>Username:</strong> <sec:authentication
-						property="principal.user.username" /></li>
-				<li><strong>Phone:</strong> <sec:authentication
-						property="principal.user.phone" /></li>
-				<li><strong>Country:</strong> <sec:authentication
-						property="principal.user.drzavaBean.name" /></li>
+				<li><strong>Email:</strong> ${user.email }</li>
+				<li><strong>Username:</strong> ${user.username }</li>
+				<li><strong>Phone:</strong> ${user.phone }</li>
+				<li><strong>Country:</strong> ${user.drzavaBean.name }</li>
 			</ul>
 		</div>
 	</section>

@@ -1,6 +1,7 @@
 package com.airport.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.airport.dto.KartaDTO;
+import com.airport.dto.SedisteDTO;
 import com.airport.repo.DrzavaRepo;
 import com.airport.repo.KartaRepo;
 import com.airport.repo.KorisnikRepo;
@@ -45,6 +48,15 @@ public class UserService {
 	
 	public List<Karta> getFlights(Korisnik korisnik){
 		return kr.findAllByKorisnik(korisnik);
+	}
+	
+	public List<KartaDTO> getFlights(Korisnik korisnik, boolean isRest) {
+		List<Karta> karte = kr.findAllByKorisnik(korisnik);
+		List<KartaDTO> karteDTO = new ArrayList<KartaDTO>();
+		for (Karta k : karte) {
+			karteDTO.add(new KartaDTO(k.getId(), k.getKorisnikBean(), k.getLet(), new SedisteDTO(k.getSediste().getId().getRedovi(), k.getSediste().getId().getKolone())));
+		}
+		return karteDTO;
 	}
 	
 	public List<Drzava> getDrzave(){
@@ -137,5 +149,9 @@ public class UserService {
 	public void changeProfilePicture(Korisnik byUsername, MultipartFile profilePicture) throws IOException {
 		byUsername.setProfPicture(profilePicture.getBytes());
 		kor.saveAndFlush(byUsername);
+	}
+
+	public List<Drzava> getCountries() {
+		return dr.findAll();
 	}
 }
