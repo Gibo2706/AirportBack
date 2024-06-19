@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,6 +16,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import com.airport.security.AuthServiceOauth;
 import com.airport.security.GithubPrincipalExtractor;
@@ -42,11 +45,21 @@ public class SecurityConfig {
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		final CorsConfiguration config = new CorsConfiguration();
+		
+		config.addAllowedOrigin("*");
+	    config.addAllowedHeader("*");
+	    config.addAllowedMethod("GET");
+	    config.addAllowedMethod("PUT");
+	    config.addAllowedMethod("POST");
+	    source.registerCorsConfiguration("/**", config);
 		http.authorizeHttpRequests(req -> 
 				req.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
 				.requestMatchers(new AntPathRequestMatcher("/user/**")).hasAnyRole("ADMIN", "USER", "AVIOCOMPANY")
 				.requestMatchers(new AntPathRequestMatcher("/booking/**")).hasAnyRole("ADMIN", "USER", "AVIOCOMPANY")
 				.requestMatchers(new AntPathRequestMatcher("/avio/**")).hasAnyRole("ADMIN", "AVIOCOMPANY")
+				.requestMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
 				.requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
 				.requestMatchers(new AntPathRequestMatcher("/**")).permitAll().anyRequest().authenticated())
 				.formLogin(form -> form.loginPage("/login.jsp")

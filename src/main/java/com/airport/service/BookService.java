@@ -62,7 +62,6 @@ public class BookService {
 		List<Sediste> sedista = br.getSeatsForFlight(fNumber);
 		List<SedisteDTO> sedistaDTO = new LinkedList<SedisteDTO>();
 		for (Sediste s : sedista) {
-			System.out.println(s.getId().getRedovi() + " " + s.getId().getKolone());
 			sedistaDTO.add(new SedisteDTO(s.getId().getRedovi(), s.getId().getKolone()));
 		}
 		return sedistaDTO;
@@ -70,6 +69,10 @@ public class BookService {
 	
 	public Sediste findById(int row, int column) {
 		return sr.findByRowAndColumn(row, column);
+	}
+	
+	public List<Let> getAllFlights(){
+		return br.findAll();
 	}
 	
 	public List<KartaDTO> confirmFlightBook(String fNumber, List<SedisteDTO> sedisteDTO, String owner){

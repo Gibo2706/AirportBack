@@ -2,6 +2,7 @@ package com.airport.rest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +36,7 @@ import model.Korisnik;
 import model.Let;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/")
 public class RestControllerAPI {
 	@Autowired
@@ -103,11 +106,15 @@ public class RestControllerAPI {
 	public ResponseEntity<?> getFlights(@RequestBody SearchReqDTO searchReq) throws ParseException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateS = null;
+		Instant inst = null;
 		try {
+			inst = Instant.parse(searchReq.getDate());
 			dateS = dateFormat.parse(searchReq.getDate());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		if(inst != null)
+			dateS = Date.from(inst);
 		Calendar c = Calendar.getInstance();
 		c.setTime(dateS);
 		c.add(Calendar.DATE, 1);
@@ -120,7 +127,7 @@ public class RestControllerAPI {
 		if (letovi != null)
 			return ResponseEntity.ok().body(letovi);
 		else
-			return ResponseEntity.badRequest().body("Los zahteb");
+			return ResponseEntity.badRequest().body("Los zahtev");
 	}
 
 	@PostMapping("/seats")
