@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.airport.dto.KartaDTO;
+import com.airport.dto.KorisnikDTO;
 import com.airport.dto.SedisteDTO;
 import com.airport.repo.DrzavaRepo;
 import com.airport.repo.KartaRepo;
@@ -153,5 +154,15 @@ public class UserService {
 
 	public List<Drzava> getCountries() {
 		return dr.findAll();
+	}
+	
+	public void updateUser(KorisnikDTO dtoK) {
+		Korisnik k = findByUsername(dtoK.username());
+		k.setEmail(dtoK.email());
+		k.setName(dtoK.name());
+		k.setSurname(dtoK.surname());
+		k.setPhone(dtoK.phone());
+		k.setUsername(dtoK.username());
+		kor.save(k);
 	}
 }

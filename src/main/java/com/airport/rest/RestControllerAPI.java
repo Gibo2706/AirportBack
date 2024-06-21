@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.airport.dto.ConfirmBookDTO;
 import com.airport.dto.KartaDTO;
+import com.airport.dto.KorisnikDTO;
 import com.airport.dto.LoginResponseDTO;
 import com.airport.dto.RestLoginDTO;
 import com.airport.dto.RestRegisterDTO;
@@ -31,6 +33,7 @@ import com.airport.dto.UserFlightsReqDTO;
 import com.airport.service.BookService;
 import com.airport.service.UserService;
 
+import jakarta.websocket.server.PathParam;
 import model.Karta;
 import model.Korisnik;
 import model.Let;
@@ -155,10 +158,17 @@ public class RestControllerAPI {
 		return ResponseEntity.ok().body(us.getFlights(k, true));
 	}
 	
-	@PostMapping("/userProfile")
-	public ResponseEntity<?> userProfile(@RequestBody UserFlightsReqDTO restLogin) {
-		System.out.println(restLogin.getUsername());
-		Korisnik k = us.findByUsername(restLogin.getUsername());
+	@PostMapping("/updateUser")
+	public ResponseEntity<?> updateUser(@RequestBody KorisnikDTO dto){
+		System.out.println(dto);
+		us.updateUser(dto);
+		return ResponseEntity.ok().body(dto);
+	}
+	
+	@GetMapping("/userProfile/{username}")
+	public ResponseEntity<?> userProfile(@PathVariable("username") String username) {
+		System.out.println(username);
+		Korisnik k = us.findByUsername(username);
 		return ResponseEntity.ok().body(k);
 	}
 
