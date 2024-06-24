@@ -1,5 +1,6 @@
 package com.airport.rest;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -21,19 +22,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.airport.dto.AirlineDTO;
+import com.airport.dto.AvionDTO;
 import com.airport.dto.ConfirmBookDTO;
 import com.airport.dto.KartaDTO;
 import com.airport.dto.KorisnikDTO;
+import com.airport.dto.LetDTO;
 import com.airport.dto.LoginResponseDTO;
+import com.airport.dto.PilotDTO;
 import com.airport.dto.RestLoginDTO;
 import com.airport.dto.RestRegisterDTO;
 import com.airport.dto.SearchReqDTO;
 import com.airport.dto.SedisteReqDTO;
+import com.airport.dto.TipAvionDTO;
 import com.airport.dto.UserFlightsReqDTO;
+import com.airport.service.AirlineService;
 import com.airport.service.BookService;
 import com.airport.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.websocket.server.PathParam;
+import model.Aviokompanija;
 import model.Karta;
 import model.Korisnik;
 import model.Let;
@@ -50,6 +59,9 @@ public class RestControllerAPI {
 
 	@Autowired
 	BookService bs;
+
+	@Autowired
+	AirlineService as;
 
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDTO> login(@RequestBody RestLoginDTO restLogin)
@@ -116,7 +128,7 @@ public class RestControllerAPI {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		if(inst != null)
+		if (inst != null)
 			dateS = Date.from(inst);
 		Calendar c = Calendar.getInstance();
 		c.setTime(dateS);
@@ -152,19 +164,19 @@ public class RestControllerAPI {
 	public ResponseEntity<?> userFlights(@RequestBody UserFlightsReqDTO restLogin) {
 		System.out.println(restLogin.getUsername());
 		Korisnik k = us.findByUsername(restLogin.getUsername());
-		for(KartaDTO karta : us.getFlights(k,true)) {
+		for (KartaDTO karta : us.getFlights(k, true)) {
 			System.out.println(karta.getLet().getfNumber());
 		}
 		return ResponseEntity.ok().body(us.getFlights(k, true));
 	}
-	
+
 	@PostMapping("/updateUser")
-	public ResponseEntity<?> updateUser(@RequestBody KorisnikDTO dto){
+	public ResponseEntity<?> updateUser(@RequestBody KorisnikDTO dto) {
 		System.out.println(dto);
 		us.updateUser(dto);
 		return ResponseEntity.ok().body(dto);
 	}
-	
+
 	@GetMapping("/userProfile/{username}")
 	public ResponseEntity<?> userProfile(@PathVariable("username") String username) {
 		System.out.println(username);
@@ -176,5 +188,27 @@ public class RestControllerAPI {
 	public String test() {
 		System.out.println("Test");
 		return "ok";
+	}
+
+	@GetMapping("/airline/{email}")
+	public ResponseEntity<?> getData(@PathVariable("email") String email) {
+		Aviokompanija airline = as.getAirline(email);
+		if (airline == null) {
+			return ResponseEntity.badRequest().body("Nema povezanih korisnika i aviokompanija!");
+		}
+		AirlineDTO dto = new AirlineDTO(airline.getEmail(), airline.getNaziv(),
+				as.getAirplanes(airline.getId()).stream()
+						.map(a -> new AvionDTO(a.getTailNumber(), new TipAvionDTO(a.getTipaviona().getNaziv()),
+								a.getAviokompanija2() != null ? a.getAviokompanija2().getNaziv(): null))
+						.toList(),
+				as.getRentedAirplanes(airline.getId()).stream()
+						.map(a -> new AvionDTO(a.getTailNumber(), new TipAvionDTO(a.getTipaviona().getNaziv()),
+								a.getAviokompanija2() != null ? a.getAviokompanija2().getNaziv(): null))
+						.toList(),
+				as.getPilots(airline.getNaziv()).stream().map(p -> new PilotDTO(p.getName(), p.getSurname())).toList(),
+				as.getFlights(airline.getId()).stream()
+						.map(f -> new LetDTO(f.getFNumber(), f.getAerodrom1().getNaziv(), f.getAerodrom2().getNaziv()))
+						.toList());
+		return ResponseEntity.ok(dto);
 	}
 }
