@@ -9,10 +9,10 @@ import jakarta.servlet.http.HttpSession;
 @ControllerAdvice
 public class ControllersAdvice {
 	
-	@ExceptionHandler(value = RuntimeException.class)
-	public String handleException(HttpSession req, Exception e) {
-		req.removeAttribute("errorMess");
-		req.setAttribute("errorMess", e.getMessage());
-		return "redirect:/error";
-	}
+	/*
+	 * @ExceptionHandler(value = RuntimeException.class) public String
+	 * handleException(HttpSession req, Exception e) {
+	 * req.removeAttribute("errorMess"); req.setAttribute("errorMess",
+	 * e.getMessage()); return "redirect:/error"; }
+	 */
 }

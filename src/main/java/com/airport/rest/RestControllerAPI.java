@@ -36,14 +36,17 @@ import com.airport.dto.SearchReqDTO;
 import com.airport.dto.SedisteReqDTO;
 import com.airport.dto.TipAvionDTO;
 import com.airport.dto.UserFlightsReqDTO;
+import com.airport.repo.KljucRepo;
 import com.airport.service.AirlineService;
 import com.airport.service.BookService;
+import com.airport.service.TokenService;
 import com.airport.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.websocket.server.PathParam;
 import model.Aviokompanija;
 import model.Karta;
+import model.Kljuc;
 import model.Korisnik;
 import model.Let;
 
@@ -62,6 +65,9 @@ public class RestControllerAPI {
 
 	@Autowired
 	AirlineService as;
+	
+	@Autowired
+	TokenService ts;
 
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDTO> login(@RequestBody RestLoginDTO restLogin)
@@ -72,8 +78,10 @@ public class RestControllerAPI {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		if (authentication == null)
 			return ResponseEntity.badRequest().body(new LoginResponseDTO("FAIL", null));
-		if (authentication.isAuthenticated())
-			return ResponseEntity.ok().body(new LoginResponseDTO("OK", authentication.getPrincipal()));
+		if (authentication.isAuthenticated()) {
+			String token = ts.generateTokenForUser(us.findByUsername(restLogin.getUsername()).getId());
+			return ResponseEntity.ok().body(new LoginResponseDTO(token, authentication.getPrincipal()));
+		}
 		else
 			return ResponseEntity.badRequest().body(new LoginResponseDTO("FAIL", null));
 	}

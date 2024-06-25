@@ -14,11 +14,13 @@ import com.airport.dto.KorisnikDTO;
 import com.airport.dto.SedisteDTO;
 import com.airport.repo.DrzavaRepo;
 import com.airport.repo.KartaRepo;
+import com.airport.repo.KljucRepo;
 import com.airport.repo.KorisnikRepo;
 import com.airport.repo.RoleRepo;
 
 import model.Drzava;
 import model.Karta;
+import model.Kljuc;
 import model.Korisnik;
 
 @Service
@@ -35,6 +37,9 @@ public class UserService {
 	
 	@Autowired
 	DrzavaRepo dr;
+	
+	@Autowired
+	KljucRepo kljr;
 	
 	@Autowired
 	private PasswordEncoder bCryptPasswordEncoder;
