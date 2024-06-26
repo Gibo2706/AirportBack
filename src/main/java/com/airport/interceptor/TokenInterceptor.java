@@ -21,10 +21,14 @@ public class TokenInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String url = request.getRequestURI();
-		if(url.contains("login") || url.contains("register") || !url.contains("api")) return true;
-		System.out.println(request.getQueryString());
+		if(url.contains("login") || url.contains("register") || url.contains("countries") || url.contains("airports") || url.contains("flights") || !url.contains("api")) return true;
 		String token = request.getHeader("token");
-		int userId = Integer.parseInt(request.getHeader("userId"));
+		int userId;
+		try {
+			userId = Integer.parseInt(request.getHeader("userId"));
+		}catch(Exception e) {
+			throw new RuntimeException("Bad token");
+		}
 		boolean tokenValid = ts.isValidToken(userId, token);
 		System.out.println(token + " isValid: " + tokenValid);
 		if(!tokenValid)

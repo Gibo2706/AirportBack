@@ -2,6 +2,9 @@ package com.airport.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +13,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.airport.dto.LetDTO;
 import com.airport.repo.AerodromRepo;
 import com.airport.repo.AvioRepo;
 import com.airport.repo.AvionRepo;
@@ -19,6 +23,7 @@ import com.airport.repo.PilotRepo;
 import com.airport.repo.SedisteRepo;
 import com.airport.repo.TipavionaRepo;
 
+import model.Aerodrom;
 import model.Aviokompanija;
 import model.Avion;
 import model.Karta;
@@ -168,6 +173,25 @@ public class AirlineService {
 		l = br.save(l);
 
 		return l.getfNumber();
+	}
+	
+	public void addFlight(LetDTO dto) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Aerodrom a1 = aeror.findByNaziv(dto.departure());
+		Aerodrom a2 = aeror.findByNaziv(dto.arrival());
+		Aviokompanija air = avior.findByEmail(dto.airLine());
+		Date dateS = null;
+		Instant inst = null;
+		try {
+			inst = Instant.parse(dto.datum());
+			dateS = dateFormat.parse(dto.datum());
+		} catch (ParseException e) {
+			System.err.println("Greska nisam mogao da parsujem 'dateS'");
+		}
+		if (inst != null)
+			dateS = Date.from(inst);
+		String fNumber = addFlight(a1.getId(), a2.getId(), dateS, dto.tailNumber(), dto.fNumber(), air);
+		
 	}
 
 	public List<Avion> getRentedAirplanes(int id) {

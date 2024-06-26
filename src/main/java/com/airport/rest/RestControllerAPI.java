@@ -219,4 +219,11 @@ public class RestControllerAPI {
 						.toList());
 		return ResponseEntity.ok(dto);
 	}
+	
+	@PostMapping("/airline/addFlight")
+	public ResponseEntity<?> addFlight(@RequestBody LetDTO dto){
+		System.out.println(dto);
+		as.addFlight(dto);
+		return ResponseEntity.ok().body(true);
+	}
 }

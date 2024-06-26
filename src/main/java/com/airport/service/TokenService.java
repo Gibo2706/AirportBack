@@ -33,7 +33,7 @@ public class TokenService {
 	
 	public boolean isValidToken(int id, String token) {
 		Kljuc k = kr.findByIdKorisnikAndKljuc(id, token);
-		if(k.getValid().before(new Date())) return false;
+		if(k == null || k.getValid().before(new Date())) return false;
 		return true;
 	}
 }
