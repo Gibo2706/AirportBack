@@ -221,4 +221,11 @@ public class AirlineService {
 		return seats;
 	}
 
+	public int getAvionType(String naziv) {
+		Tipaviona ta = tar.findByNaziv(naziv);
+		if (ta == null) {
+			return -1;
+		}
+		return ta.getId();
+	}
 }

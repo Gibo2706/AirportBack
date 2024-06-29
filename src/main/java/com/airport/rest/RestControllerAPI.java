@@ -226,4 +226,18 @@ public class RestControllerAPI {
 		as.addFlight(dto);
 		return ResponseEntity.ok().body(true);
 	}
+	
+	@PostMapping("/airline/addPilot")
+	public ResponseEntity<?> addPilot(@RequestBody PilotDTO dto){
+		System.out.println(dto);
+		as.addPilot(dto.ime(), dto.prezime(), as.getAirline(dto.avioKompanija()).getId());
+		return ResponseEntity.ok().body(true);
+	}
+	
+	@PostMapping("/airline/addPlane")
+	public ResponseEntity<?> addPlane(@RequestBody AvionDTO dto){
+		System.out.println(dto);
+		as.addPlane(dto.tailNumber(), as.getAvionType(dto.tip().naziv()), as.getAirline(dto.avioKompanija()).getId() );
+		return ResponseEntity.ok().body(true);
+	}
 }
