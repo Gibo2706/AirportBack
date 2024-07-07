@@ -1,5 +1,6 @@
 package com.airport.rest;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -49,6 +52,7 @@ import model.Karta;
 import model.Kljuc;
 import model.Korisnik;
 import model.Let;
+import net.sf.jasperreports.engine.JRException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -65,7 +69,7 @@ public class RestControllerAPI {
 
 	@Autowired
 	AirlineService as;
-	
+
 	@Autowired
 	TokenService ts;
 
@@ -81,8 +85,7 @@ public class RestControllerAPI {
 		if (authentication.isAuthenticated()) {
 			String token = ts.generateTokenForUser(us.findByUsername(restLogin.getUsername()).getId());
 			return ResponseEntity.ok().body(new LoginResponseDTO(token, authentication.getPrincipal()));
-		}
-		else
+		} else
 			return ResponseEntity.badRequest().body(new LoginResponseDTO("FAIL", null));
 	}
 
@@ -207,11 +210,11 @@ public class RestControllerAPI {
 		AirlineDTO dto = new AirlineDTO(airline.getEmail(), airline.getNaziv(),
 				as.getAirplanes(airline.getId()).stream()
 						.map(a -> new AvionDTO(a.getTailNumber(), new TipAvionDTO(a.getTipaviona().getNaziv()),
-								a.getAviokompanija2() != null ? a.getAviokompanija2().getNaziv(): null))
+								a.getAviokompanija2() != null ? a.getAviokompanija2().getNaziv() : null))
 						.toList(),
 				as.getRentedAirplanes(airline.getId()).stream()
 						.map(a -> new AvionDTO(a.getTailNumber(), new TipAvionDTO(a.getTipaviona().getNaziv()),
-								a.getAviokompanija2() != null ? a.getAviokompanija2().getNaziv(): null))
+								a.getAviokompanija2() != null ? a.getAviokompanija2().getNaziv() : null))
 						.toList(),
 				as.getPilots(airline.getNaziv()).stream().map(p -> new PilotDTO(p.getName(), p.getSurname())).toList(),
 				as.getFlights(airline.getId()).stream()
@@ -219,25 +222,44 @@ public class RestControllerAPI {
 						.toList());
 		return ResponseEntity.ok(dto);
 	}
-	
+
 	@PostMapping("/airline/addFlight")
-	public ResponseEntity<?> addFlight(@RequestBody LetDTO dto){
+	public ResponseEntity<?> addFlight(@RequestBody LetDTO dto) {
 		System.out.println(dto);
 		as.addFlight(dto);
 		return ResponseEntity.ok().body(true);
 	}
-	
+
 	@PostMapping("/airline/addPilot")
-	public ResponseEntity<?> addPilot(@RequestBody PilotDTO dto){
+	public ResponseEntity<?> addPilot(@RequestBody PilotDTO dto) {
 		System.out.println(dto);
 		as.addPilot(dto.ime(), dto.prezime(), as.getAirline(dto.avioKompanija()).getId());
 		return ResponseEntity.ok().body(true);
 	}
-	
+
 	@PostMapping("/airline/addPlane")
-	public ResponseEntity<?> addPlane(@RequestBody AvionDTO dto){
+	public ResponseEntity<?> addPlane(@RequestBody AvionDTO dto) {
 		System.out.println(dto);
-		as.addPlane(dto.tailNumber(), as.getAvionType(dto.tip().naziv()), as.getAirline(dto.avioKompanija()).getId() );
+		as.addPlane(dto.tailNumber(), as.getAvionType(dto.tip().naziv()), as.getAirline(dto.avioKompanija()).getId());
 		return ResponseEntity.ok().body(true);
+	}
+
+	@GetMapping("/airline/generateReport/{email}")
+	public ResponseEntity<byte[]> generateReport(@PathVariable("email") String email) {
+		int id = as.getAirline(email).getId();
+		byte[] pdf = null;
+		try {
+			pdf = as.getAirlineReport(id);
+		}catch (Exception e) {
+			throw new RuntimeException("Nema izvestaja za ovu aviokompaniju!");
+		}
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=report.pdf");
+		headers.setContentDispositionFormData("attachment", "report.pdf");
+		headers.setContentType(MediaType.APPLICATION_PDF);
+		headers.setContentLength(pdf.length);
+
+		return ResponseEntity.ok().headers(headers).body(pdf);
+
 	}
 }
